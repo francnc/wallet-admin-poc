@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CERTIFICATES_QUERY } from '../../gql/queries/getCertificatesQuery';
+import { Container } from '@material-ui/core';
 
 const Certificates = () => {
   const { loading, error, data } = useQuery(GET_CERTIFICATES_QUERY, {
@@ -13,7 +14,11 @@ const Certificates = () => {
     return 'Error';
   }
 
-  return <p>Hi again!</p>;
+  return (
+    <Container>
+      <p>Hi again!</p>
+    </Container>
+  );
 };
 
 export { Certificates };

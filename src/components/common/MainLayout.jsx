@@ -24,7 +24,7 @@ export const MainLayout = ({ children }) => {
         }}
       >
         <SideBar />
-        <Container>{children}</Container>
+        {children}
       </div>
     </main>
   );

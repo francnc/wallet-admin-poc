@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_BUSINESSES } from '../../gql/queries/getAllBusinesses';
 import { Loading } from '../common/Loading';
+import Container from '@material-ui/core/Container';
 const Businesses = () => {
   /*
     commented code is to avoid querying all businesses in Leanid's local
@@ -29,14 +30,14 @@ const Businesses = () => {
     return 'Error';
   }
   return (
-    <div>
+    <Container>
       <h1>Businesses</h1>
       {loading ? (
         <Loading />
       ) : (
         data?.businesses?.edges?.map((i) => <p>business uuid: {i.node.uuid}</p>)
       )}
-    </div>
+    </Container>
   );
 };
 
