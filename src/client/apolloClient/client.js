@@ -1,10 +1,9 @@
 import { ApolloClient } from '@apollo/client/core';
-import { InMemoryCache } from '@apollo/client';
-
+import { apolloCache } from './apolloCache';
 export const client = new ApolloClient({
   uri: 'http://localhost:3000/api/v4/graphql',
   connectToDevTools: true,
-  cache: new InMemoryCache(),
+  cache: apolloCache,
   resolvers: {},
   headers: {
     apikey: 'mock_api_key',
