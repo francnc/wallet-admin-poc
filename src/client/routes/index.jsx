@@ -7,8 +7,8 @@ import { NotFound } from '../components/common/NotFound';
 const Routes = () => {
   return (
     <Switch>
-      <Route component={Businesses} path={'/businesses'} />
-      <Route component={Certificates} path={'/certificates'} />
+      <Route component={Businesses} path="/businesses" />
+      <Route component={Certificates} path="/certificates" />
       <Route component={NotFound} />
     </Switch>
   );

@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/client/core';
 import { apolloCache } from './apolloCache';
 export const client = new ApolloClient({
-  uri: 'http://6112441bbd3a.ngrok.io/api/v4/graphql',
+  uri: 'http://localhost:3000/api/v4/graphql',
   connectToDevTools: true,
   cache: apolloCache,
   resolvers: {},
