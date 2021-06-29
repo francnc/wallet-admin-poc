@@ -1,3 +1,5 @@
+import { redirectToWallet } from '../../../util/walletRedirection';
+
 export const UserColumns = [
   {
     field: 'id',
@@ -55,6 +57,24 @@ export const PolicyColumns = [
     headerName: 'Status',
     sortable: false,
     flex: 1.5,
+  },
+  {
+    field: 'Wallet',
+    headerName: 'Chek in wallet',
+    width: 100,
+    sortable: false,
+    flex: 1,
+    disableClickEventBubbling: true,
+    renderCell: (params) => (
+      <button
+        onClick={() => {
+          console.log(params);
+          redirectToWallet(params.id, 'policies/:businessUuid/endorsements/request');
+        }}
+      >
+        See in wallet
+      </button>
+    ),
   },
 ];
 
