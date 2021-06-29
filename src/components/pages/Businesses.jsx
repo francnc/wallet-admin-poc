@@ -99,7 +99,7 @@ const Businesses = () => {
     },
     {
       field: 'Wallet',
-      headerName: 'Check in wallet',
+      headerName: 'Check in Wallet',
       width: 100,
       sortable: false,
       flex: 1,
@@ -111,7 +111,7 @@ const Businesses = () => {
             redirectToWallet(params.id, 'quick_links');
           }}
         >
-          See in wallet
+          See in Wallet
         </button>
       ),
     },
