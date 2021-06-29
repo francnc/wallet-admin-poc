@@ -7,10 +7,13 @@ import Container from '@material-ui/core/Container';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import Table from '@material-ui/core/Table';
 import { CellListItems } from '../common/CellListItems';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+import { ViewHeader } from '../common/ViewHeader';
 
-export const UserView = ({ match }) => {
+export const UserView = ({ match, history }) => {
   const {
     params: { userId },
   } = match;
@@ -36,7 +39,9 @@ export const UserView = ({ match }) => {
       value: (
         <CellListItems>
           {user.businesses?.map((business) => (
-            <Link to={`/businesses/${business.id}`}>{business.name}</Link>
+            <Link key={business.id} to={`/businesses/${business.id}`}>
+              {business.name}
+            </Link>
           ))}
         </CellListItems>
       ),
@@ -73,25 +78,32 @@ export const UserView = ({ match }) => {
 
   return (
     <Container maxWidth={false}>
-      <h1>User</h1>
+      <ViewHeader title="User">
+        <Button
+          onClick={() => {
+            history.push(`/users/${userId}/edit`);
+          }}
+          variant="contained"
+          color="default"
+        >
+          Edit
+        </Button>
+      </ViewHeader>
       {loading ? (
         <Loading />
       ) : (
-        <TableBody
-          style={{
-            width: '100%',
-            display: 'inline-table',
-          }}
-        >
-          {rows.map((row, index) => (
-            <TableRow selected={index % 2 === 1} key={row.name}>
-              <TableCell component="th" scope="row">
-                <b>{row.name}</b>
-              </TableCell>
-              <TableCell>{row.value}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        <Table>
+          <TableBody>
+            {rows.map((row, index) => (
+              <TableRow selected={index % 2 !== 1} key={row.name}>
+                <TableCell component="th" scope="row">
+                  <b>{row.name}</b>
+                </TableCell>
+                <TableCell>{row.value}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )}
     </Container>
   );
