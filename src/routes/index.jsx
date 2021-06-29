@@ -6,6 +6,8 @@ import { UserView } from '../components/pages/UserView';
 import { UserEdit } from '../components/pages/UserEdit';
 import { Users } from '../components/pages/Users';
 import { Certificates } from '../components/pages/Certificates';
+import { Policies } from '../components/pages/Policies';
+import { Quotes } from '../components/pages/Quotes';
 import { MainLayout } from '../components/common/MainLayout';
 import { NotFound } from '../components/common/NotFound';
 
@@ -17,6 +19,8 @@ const Routes = () => {
         <Route component={UserView} path="/users/:userId" exact />
         <Route component={UserEdit} path="/users/:userId/edit" />
         <Route component={Businesses} path="/businesses" exact />
+        <Route component={Policies} path="/policies" exact />
+        <Route component={Quotes} path="/quotes" exact />
         <Route component={BusinessView} path="/businesses/:businessId" />
         <Route component={Certificates} path="/certificates" />
         <Route component={NotFound} />
