@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import { DataGrid } from '@material-ui/data-grid';
 import { GET_ALL_BUSINESSES } from '../../gql/queries/getAllBusinesses';
 import { Loading } from '../common/Loading';
+import { redirectToWallet } from '../../util/walletRedirection';
 
 const Businesses = () => {
   /*
@@ -86,6 +87,24 @@ const Businesses = () => {
       flex: 1.5,
       sortable: false,
     },
+    {
+      field: 'Wallet',
+      headerName: 'Chek in wallet',
+      width: 100,
+      sortable: false,
+      flex: 1,
+      disableClickEventBubbling: true,
+      renderCell: (params) => (
+        <button
+          onClick={() => {
+            console.log(params);
+            redirectToWallet(params.id, 'quick_links');
+          }}
+        >
+          See in wallet
+        </button>
+      ),
+    },
   ];
 
   const rows = data?.businesses?.edges?.map((business) => business.node);
@@ -96,7 +115,7 @@ const Businesses = () => {
       {loading ? (
         <Loading />
       ) : (
-        <div style={{ width: '100%', height: '89vh' }}>
+        <div style={{ width: '100%', height: '80%' }}>
           <DataGrid rows={rows} columns={columns} pageSize={20} />
         </div>
       )}
