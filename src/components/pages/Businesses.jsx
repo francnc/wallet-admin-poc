@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/client';
 import { DataGrid } from '@material-ui/data-grid';
 import { GET_ALL_BUSINESSES } from '../../gql/queries/getAllBusinesses';
 
+import { Loading } from '../common/Loading';
+import Container from '@material-ui/core/Container';
 const Businesses = () => {
   /*
     commented code is to avoid querying all businesses in Leanid's local
@@ -25,12 +27,6 @@ const Businesses = () => {
   //     }
   //   }
   // }, [data]);
-
-  if (
-    loading
-    // || isFetching
-  )
-    return 'Loading';
 
   if (error) {
     return 'Error';
@@ -85,9 +81,16 @@ const Businesses = () => {
   const rows = data?.businesses?.edges?.map((business) => business.node);
 
   return (
-    <div style={{ width: '100%', height: 968 }}>
-      <DataGrid rows={rows} columns={columns} pageSize={20} />
-    </div>
+    <Container>
+      <h1>Businesses</h1>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div style={{ width: '100%', height: 968 }}>
+          <DataGrid rows={rows} columns={columns} pageSize={20} />
+        </div>
+      )}
+    </Container>
   );
 };
 
