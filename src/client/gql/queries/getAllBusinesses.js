@@ -8,6 +8,12 @@ export const GET_ALL_BUSINESSES = gql`
           id
           name
           uuid
+          industry
+          subindustry
+          contactEmail
+          createdAt
+          updatedAt
+          contactPhone
         }
       }
       pageInfo {
