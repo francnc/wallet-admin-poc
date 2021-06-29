@@ -99,7 +99,7 @@ const Businesses = () => {
     },
     {
       field: 'Wallet',
-      headerName: 'Chek in wallet',
+      headerName: 'Check in wallet',
       width: 100,
       sortable: false,
       flex: 1,

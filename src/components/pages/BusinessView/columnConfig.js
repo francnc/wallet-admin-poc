@@ -60,7 +60,7 @@ export const PolicyColumns = [
   },
   {
     field: 'Wallet',
-    headerName: 'Chek in wallet',
+    headerName: 'Modify in Wallet',
     width: 100,
     sortable: false,
     flex: 1,
@@ -69,7 +69,7 @@ export const PolicyColumns = [
       <button
         onClick={() => {
           console.log(params);
-          redirectToWallet(params.id, 'policies/:businessUuid/endorsements/request');
+          redirectToWallet(params.id, `policies/${params.row.uuid}/endorsements/request`);
         }}
       >
         See in wallet
