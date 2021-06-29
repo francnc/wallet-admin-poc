@@ -41,13 +41,16 @@ const Businesses = () => {
       ) : (
         data?.businesses?.edges?.map((i) => (
           <>
-            <p>business uuid: {i.node.uuid} <br/> business name: {i.node.name}</p>
-            <button onClick={()=>redirectToWallet(i.node.id,'quick_links')}>
+            <p>
+              business uuid: {i.node.uuid}
+              <br />
+              business name: {i.node.name}
+            </p>
+            <button onClick={() => redirectToWallet(i.node.id, 'quick_links')}>
               See business in wallet
             </button>
           </>
-          )
-        )
+        ))
       )}
     </Container>
   );
