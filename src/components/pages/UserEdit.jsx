@@ -33,7 +33,6 @@ export const UserEdit = ({ match }) => {
       <ViewHeader title="Edit User" subTitle={user.fullName}>
         <Link to="/users">« Back to Users</Link>
       </ViewHeader>
-      UserEdit
       <form>
         <Input  value={user.firstName} />
       </form>
