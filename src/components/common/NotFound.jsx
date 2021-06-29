@@ -20,11 +20,9 @@ const useStyles = makeStyles({
   root: {
     border: 0,
     color: 'red',
-    height: 48,
+    height: 120,
     padding: '0 30px',
-  },
-  label: {
-    textTransform: 'capitalize',
+    width: '5em',
   },
 });
 
