@@ -17,7 +17,7 @@ const Businesses = () => {
   const [searchParams, setSearchParams] = useState('');
   const { loading, error, data, fetchMore, refetch } = useQuery(
     GET_ALL_BUSINESSES,
-    { variables: { search: searchParams } },
+    { variables: { search: searchParams }, notifyOnNetworkStatusChange: true },
   );
   // useEffect(() => {
   //   if (data) {
