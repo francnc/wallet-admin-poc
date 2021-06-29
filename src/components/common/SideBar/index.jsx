@@ -12,7 +12,7 @@ export const SideBar = () => {
   useEffect(() => {
     if (location.pathname.replace('/', '')) {
       const item = links.find((it) => it.link === location.pathname);
-      setCurrentItem(item);
+      setCurrentItem(item || {});
     }
   }, []);
 

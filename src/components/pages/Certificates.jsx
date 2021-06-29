@@ -1,10 +1,10 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_CERTIFICATES_QUERY } from '../../gql/queries/getCertificatesQuery';
+import { GET_ALL_CERTIFICATES } from '../../gql/queries/getAllCertificates';
 import { Container } from '@material-ui/core';
 
 const Certificates = () => {
-  const { loading, error, data } = useQuery(GET_CERTIFICATES_QUERY, {
+  const { loading, error, data } = useQuery(GET_ALL_CERTIFICATES, {
     variables: { currentBusinessId: 7 },
   });
 
