@@ -32,19 +32,14 @@ const BusinessView = () => {
 
   if (loading) return <Loading />;
 
-  const [businessInfo] = data.businesses.nodes;
-  const usersInBusiness = data.users.nodes;
-  const policiesInBusiness = data.policies.nodes;
-  const quotesInBusiness = data.quotes.nodes;
-
   if (error) {
     return 'Error';
   }
 
   return (
     <div>
-      <p>Business name: {businessInfo.name}</p>
-      <p>Business uuid: {businessInfo.uuid}</p>
+      <p>Business name: {data.businesses.nodes[0].name}</p>
+      <p>Business uuid: {data.businesses.nodes[0].uuid}</p>
     </div>
   );
 };
