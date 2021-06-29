@@ -14,7 +14,13 @@ const Businesses = () => {
   */
   // const [isFetching, setFetching] = useState(true);
   const [searchParams, setSearchParams] = useState('');
-  const { loading, error, data, fetchMore, refetch } = useQuery(GET_ALL_BUSINESSES,{variables: {search: searchParams}});
+  const { loading, error, data, fetchMore, refetch } = useQuery(
+    GET_ALL_BUSINESSES,
+    {
+      notifyOnNetworkStatusChange: true,
+      variables: {search: searchParams
+    }
+  });
   // useEffect(() => {
   //   if (data) {
   //     const hasNextPage = data.businesses.pageInfo.hasNextPage;
