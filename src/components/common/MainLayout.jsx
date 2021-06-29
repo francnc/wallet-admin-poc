@@ -12,6 +12,7 @@ export const MainLayout = ({ children }) => {
         style={{
           height: 50,
           padding: 5,
+          backgroundColor: '#fc3333',
         }}
       >
         <img className="logo" src={Logo} />
