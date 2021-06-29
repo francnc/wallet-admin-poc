@@ -75,6 +75,24 @@ const BusinessView = () => {
     setValue(newValue);
   };
 
+  const businessInfo = [
+    {
+      children: data.users.nodes,
+      column: UserColumns,
+      index: 0,
+    },
+    {
+      children: data.policies.nodes,
+      column: PolicyColumns,
+      index: 1,
+    },
+    {
+      children: data.quotes.nodes,
+      column: QuoteColumns,
+      index: 2,
+    },
+  ];
+
   return (
     <Container style={{ maxWidth: '100%' }}>
       <h1>{data.businesses.nodes[0].name}</h1>
@@ -91,15 +109,11 @@ const BusinessView = () => {
         <Tab label="Policies" {...a11yProps(1)} />
         <Tab label="Quotes" {...a11yProps(2)} />
       </Tabs>
-      <TabPanel value={value} index={0} columns={UserColumns}>
-        {data.users.nodes}
-      </TabPanel>
-      <TabPanel value={value} index={1} columns={PolicyColumns}>
-        {data.policies.nodes}
-      </TabPanel>
-      <TabPanel value={value} index={2} columns={QuoteColumns}>
-        {data.quotes.nodes}
-      </TabPanel>
+      {businessInfo.map((item) => (
+        <TabPanel value={value} index={item.index} columns={item.column}>
+          {item.children}
+        </TabPanel>
+      ))}
     </Container>
   );
 };
