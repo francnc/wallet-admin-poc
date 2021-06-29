@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../common/Loading';
 import { DataGrid } from '@material-ui/data-grid';
 import Container from '@material-ui/core/Container';
+import AccessibleIcon from '@material-ui/icons/Accessible';
 
 const CellListItems = ({ children }) => {
   return (
@@ -30,6 +31,7 @@ export const Users = ({ history }) => {
       headerName: 'User Name',
       flex: 1,
       sortable: false,
+      renderCell: (user) => <Link to={`/users/${user.id}`}>{user.value}</Link>,
     },
     {
       field: 'businesses',
@@ -76,7 +78,23 @@ export const Users = ({ history }) => {
       headerName: 'Action',
       flex: 1,
       sortable: false,
-      renderCell: (d) => <div>asdfasdf</div>,
+      renderCell: (user) => (
+        <div
+          style={{
+            lineHeight: 1.5,
+          }}
+        >
+          <Link to={`/users/${user.id}`}>View</Link>
+          {' | '}
+          <Link to={`/users/${user.id}/edit`}>Edit</Link>
+          {' |'}
+          <br />
+          <Link to={`/request_docs/new?user_id=${user.id}`}>
+            Request Document
+            <AccessibleIcon />
+          </Link>
+        </div>
+      ),
     },
   ];
   //
