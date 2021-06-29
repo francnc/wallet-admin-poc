@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 import { Loading } from '../common/Loading';
 import { DataGrid } from '@material-ui/data-grid';
 import Container from '@material-ui/core/Container';
-import AccessibleIcon from '@material-ui/icons/Accessible';
+import EditIcon from '@material-ui/icons/Edit';
+import AccountBox from '@material-ui/icons/AccountBox';
+import InsertDriveFile from '@material-ui/icons/InsertDriveFile';
+import { Button } from '@material-ui/core';
 
 const CellListItems = ({ children }) => {
   return (
@@ -84,17 +87,24 @@ export const Users = ({ history }) => {
             lineHeight: 1.5,
           }}
         >
-          <Link to={`/users/${user.id}`}>View</Link>
-          {' | '}
-          <Link to={`/users/${user.id}/edit`}>Edit</Link>
-          {' |'}
-          <br />
+          <Link to={`/users/${user.id}`}>
+            <AccountBox />
+          </Link>
+          <Link to={`/users/${user.id}/edit`}>
+            <EditIcon />
+          </Link>
           <Link to={`/request_docs/new?user_id=${user.id}`}>
-            Request Document
-            <AccessibleIcon />
+            <InsertDriveFile />
           </Link>
         </div>
       ),
+    },
+    {
+      field: 'impersonate',
+      headerName: 'Impersonation',
+      flex: 1,
+      sortable: false,
+      renderCell: () => <Button variant="contained" color="primary">Impersonate</Button>,
     },
   ];
   //
