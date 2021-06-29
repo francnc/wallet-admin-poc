@@ -3,19 +3,14 @@ import { useParams } from 'react-router';
 import { node, any } from 'prop-types';
 import { useQuery } from '@apollo/client';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Container,
-  AppBar,
-  Tabs,
-  Tab,
-  Box,
-  Typography,
-} from '@material-ui/core';
-import { GET_BUSINESS } from '../../gql/queries/getBusiness';
-import { Loading } from '../common/Loading';
+import { Container, AppBar, Tabs, Tab } from '@material-ui/core';
+import { DataGrid } from '@material-ui/data-grid';
+import { GET_BUSINESS } from '../../../gql/queries/getBusiness';
+import { Loading } from '../../common/Loading';
+import { UserColumns, PolicyColumns, QuoteColumns } from './columnConfig';
 
 const TabPanel = (props) => {
-  const { children, value, index, ...other } = props;
+  const { children, value, index, columns, ...other } = props;
   return (
     <div
       role="tabpanel"
@@ -25,9 +20,9 @@ const TabPanel = (props) => {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
+        <div style={{ width: '100%', height: '89vh' }}>
+          <DataGrid rows={children} columns={columns} pageSize={20} />
+        </div>
       )}
     </div>
   );
@@ -93,7 +88,7 @@ const BusinessView = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ maxWidth: '100%' }}>
       <h1>{data.businesses.nodes[0].name}</h1>
       <h3>uuid: {data.businesses.nodes[0].uuid}</h3>
       <div className={classes.root}>
@@ -110,20 +105,14 @@ const BusinessView = () => {
             <Tab label="Quotes" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
-        <TabPanel value={value} index={0}>
-          {data.users.nodes.map((user) => (
-            <li>{user.fullName}</li>
-          ))}
+        <TabPanel value={value} index={0} columns={UserColumns}>
+          {data.users.nodes}
         </TabPanel>
-        <TabPanel value={value} index={1}>
-          {data.policies.nodes.map((policy) => (
-            <li>{policy.insurance || policy.insuranceTypeName}</li>
-          ))}
+        <TabPanel value={value} index={1} columns={PolicyColumns}>
+          {data.policies.nodes}
         </TabPanel>
-        <TabPanel value={value} index={2}>
-          {data.quotes.nodes.map((quote) => (
-            <li>{quote.status}</li>
-          ))}
+        <TabPanel value={value} index={2} columns={QuoteColumns}>
+          {data.quotes.nodes}
         </TabPanel>
       </div>
     </Container>
