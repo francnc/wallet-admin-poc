@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
+import SearchIcon from '@material-ui/icons/Search';
 import { DataGrid } from '@material-ui/data-grid';
 import { GET_ALL_BUSINESSES } from '../../gql/queries/getAllBusinesses';
 import { Loading } from '../common/Loading';
@@ -14,7 +15,10 @@ const Businesses = () => {
   */
   // const [isFetching, setFetching] = useState(true);
   const [searchParams, setSearchParams] = useState('');
-  const { loading, error, data, fetchMore, refetch } = useQuery(GET_ALL_BUSINESSES,{variables: {search: searchParams}});
+  const { loading, error, data, fetchMore, refetch } = useQuery(
+    GET_ALL_BUSINESSES,
+    { variables: { search: searchParams } },
+  );
   // useEffect(() => {
   //   if (data) {
   //     const hasNextPage = data.businesses.pageInfo.hasNextPage;
@@ -30,6 +34,10 @@ const Businesses = () => {
   //     }
   //   }
   // }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, [searchParams]);
 
   if (error) {
     return 'Error';
@@ -113,11 +121,16 @@ const Businesses = () => {
   return (
     <Container maxWidth={false}>
       <h1>Businesses</h1>
-      <input id="searchInput"/>
-      <button onClick={()=>{
-        setSearchParams(document.getElementById("searchInput").value)
-        refetch();
-      }}/>
+      <div style={{ display: 'flex' }}>
+        <input id="searchInput" />
+        <button
+          onClick={() =>
+            setSearchParams(document.getElementById('searchInput').value)
+          }
+        >
+          <SearchIcon />
+        </button>
+      </div>
       {loading ? (
         <Loading />
       ) : (
