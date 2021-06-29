@@ -135,7 +135,7 @@ const Businesses = () => {
         <Loading />
       ) : (
         <div style={{ width: '100%', height: '80%' }}>
-          <DataGrid rows={rows} columns={columns} pageSize={20} />
+          <DataGrid disableColumnFilter rows={rows} columns={columns} pageSize={20} />
         </div>
       )}
     </Container>
