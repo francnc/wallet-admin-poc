@@ -10,6 +10,8 @@ export const USER_FRAGMENT = gql`
     phone
     userRole
     uuid
+    updatedAt
+    createdAt
     roles {
       id
       name

@@ -9,109 +9,93 @@ import EditIcon from '@material-ui/icons/Edit';
 import AccountBox from '@material-ui/icons/AccountBox';
 import InsertDriveFile from '@material-ui/icons/InsertDriveFile';
 import { Button } from '@material-ui/core';
+import { CellListItems } from '../common/CellListItems';
 
-const CellListItems = ({ children }) => {
-  return (
-    <ul
-      style={{
-        lineHeight: 1.5,
-        listStyleType: 'none',
-        padding: 0,
-        overflow: 'scroll',
-      }}
-    >
-      {React.Children.map(children, (child) => (
-        <li>{child}</li>
-      ))}
-    </ul>
-  );
-};
+const columns = [
+  {
+    field: 'fullName',
+    headerName: 'User Name',
+    flex: 1,
+    sortable: false,
+    renderCell: (user) => <Link to={`/users/${user.id}`}>{user.value}</Link>,
+  },
+  {
+    field: 'businesses',
+    headerName: 'Business',
+    flex: 1,
+    sortable: false,
+    renderCell: (businesses) => (
+      <CellListItems>
+        {businesses.value.map((business) => (
+          <Link to={`/businesses/${business.id}`}>{business.name}</Link>
+        ))}
+      </CellListItems>
+    ),
+  },
+  {
+    field: 'email',
+    headerName: 'Email',
+    flex: 1,
+    sortable: false,
+  },
+  {
+    field: 'phone',
+    headerName: 'Phone',
+    flex: 1,
+    sortable: false,
+  },
+  {
+    field: 'roles',
+    headerName: 'Roles',
+    flex: 1,
+    sortable: false,
+    renderCell: (roles) => (
+      <CellListItems>{roles.value.map((role) => role.name)}</CellListItems>
+    ),
+  },
+  {
+    field: 'uuid',
+    headerName: 'UUID',
+    flex: 1,
+    sortable: false,
+  },
+  {
+    field: 'action',
+    headerName: 'Action',
+    flex: 1,
+    sortable: false,
+    renderCell: (user) => (
+      <div
+        style={{
+          lineHeight: 1.5,
+        }}
+      >
+        <Link to={`/users/${user.id}`}>
+          <AccountBox />
+        </Link>
+        <Link to={`/users/${user.id}/edit`}>
+          <EditIcon />
+        </Link>
+        <Link to={`/request_docs/new?user_id=${user.id}`}>
+          <InsertDriveFile />
+        </Link>
+      </div>
+    ),
+  },
+  {
+    field: 'impersonate',
+    headerName: 'Impersonation',
+    flex: 1,
+    sortable: false,
+    renderCell: () => (
+      <Button variant="contained" color="primary">
+        Impersonate
+      </Button>
+    ),
+  },
+];
 
 export const Users = ({ history }) => {
-  const columns = [
-    {
-      field: 'fullName',
-      headerName: 'User Name',
-      flex: 1,
-      sortable: false,
-      renderCell: (user) => <Link to={`/users/${user.id}`}>{user.value}</Link>,
-    },
-    {
-      field: 'businesses',
-      headerName: 'Business',
-      flex: 1,
-      sortable: false,
-      renderCell: (businesses) => (
-        <CellListItems>
-          {businesses.value.map((business) => (
-            <Link to={`/businesses/${business.id}`}>{business.name}</Link>
-          ))}
-        </CellListItems>
-      ),
-    },
-    {
-      field: 'email',
-      headerName: 'Email',
-      flex: 1,
-      sortable: false,
-    },
-    {
-      field: 'phone',
-      headerName: 'Phone',
-      flex: 1,
-      sortable: false,
-    },
-    {
-      field: 'roles',
-      headerName: 'Roles',
-      flex: 1,
-      sortable: false,
-      renderCell: (roles) => (
-        <CellListItems>{roles.value.map((role) => role.name)}</CellListItems>
-      ),
-    },
-    {
-      field: 'uuid',
-      headerName: 'UUID',
-      flex: 1,
-      sortable: false,
-    },
-    {
-      field: 'action',
-      headerName: 'Action',
-      flex: 1,
-      sortable: false,
-      renderCell: (user) => (
-        <div
-          style={{
-            lineHeight: 1.5,
-          }}
-        >
-          <Link to={`/users/${user.id}`}>
-            <AccountBox />
-          </Link>
-          <Link to={`/users/${user.id}/edit`}>
-            <EditIcon />
-          </Link>
-          <Link to={`/request_docs/new?user_id=${user.id}`}>
-            <InsertDriveFile />
-          </Link>
-        </div>
-      ),
-    },
-    {
-      field: 'impersonate',
-      headerName: 'Impersonation',
-      flex: 1,
-      sortable: false,
-      renderCell: () => (
-        <Button variant="contained" color="primary">
-          Impersonate
-        </Button>
-      ),
-    },
-  ];
-
   const [isFetching, setFetching] = useState(true);
 
   const {
