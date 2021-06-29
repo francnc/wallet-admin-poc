@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_USER } from '../../gql/queries/getUser';
+import { UPDATE_USER } from '../../gql/mutations/updateUser';
 import { Loading } from '../common/Loading';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import { ViewHeader } from '../common/ViewHeader';
 import { Button, Card } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import TextField from '@material-ui/core/TextField';
 import { FixedTags } from '../common/FixedTags';
+import { DELETE_USER } from '../../gql/mutations/deleteUser';
+import { GET_ALL_USERS } from '../../gql/queries/getAllUsers';
 
 const initialState = {
   firstName: '',
@@ -17,12 +21,13 @@ const initialState = {
   roles: [],
 };
 
-export const UserEdit = ({ match }) => {
+export const UserEdit = ({ match, history }) => {
   const {
     params: { userId },
   } = match;
 
   const [state, setState] = useState(initialState);
+  const [isShowAlert, showAlert] = useState(false);
 
   const staticRoles = {
     admin: 'Admin',
@@ -46,7 +51,7 @@ export const UserEdit = ({ match }) => {
   const [user = {}] = data.users.nodes;
 
   useEffect(() => {
-    if (user) {
+    if (!loading) {
       setState({
         firstName: user.firstName,
         lastName: user.lastName,
@@ -61,6 +66,9 @@ export const UserEdit = ({ match }) => {
     }
   }, [loading]);
 
+  const [updateUser, { loading: updateUserLoading }] = useMutation(UPDATE_USER);
+  const [deleteUser, { loading: deleteUserLoading }] = useMutation(DELETE_USER);
+
   const inputProps = {
     fullWidth: true,
     variant: 'outlined',
@@ -69,7 +77,16 @@ export const UserEdit = ({ match }) => {
 
   const updateUserHandler = (event) => {
     event.preventDefault();
-    console.log('submit', state);
+
+    updateUser({
+      variables: {
+        input: {
+          ...state,
+          roles: state.roles.map((role) => role.name),
+        },
+        userId,
+      },
+    });
   };
 
   const changePasswordHandler = (event) => {
@@ -79,11 +96,48 @@ export const UserEdit = ({ match }) => {
 
   const deleteUserHandler = (event) => {
     event.preventDefault();
-    console.log('submit', state);
+    showAlert(false);
+    deleteUser({
+      variables: {
+        id: userId,
+      },
+      refetchQueries: [
+        {
+          query: GET_ALL_USERS,
+        },
+      ],
+    }).then(() => {
+      history.push('/users');
+    });
   };
 
   return (
     <Container maxWidth={false}>
+      {isShowAlert && (
+        <Alert severity="warning">
+          <div
+            style={{
+              display: 'flex',
+            }}
+          >
+            <div>Are you sure you want to delete this user?</div>
+            <div>
+              <Button size="small" color="default" onClick={deleteUserHandler}>
+                Yes
+              </Button>
+              <Button
+                size="small"
+                color="default"
+                onClick={() => {
+                  showAlert(false);
+                }}
+              >
+                No
+              </Button>
+            </div>
+          </div>
+        </Alert>
+      )}
       <ViewHeader title="Edit User" subTitle={state.firstName}>
         <Link to="/users">« Back to Users</Link>
       </ViewHeader>
@@ -135,22 +189,27 @@ export const UserEdit = ({ match }) => {
           />
         </form>
       )}
-      <Button variant="contained" color="secondary" onClick={updateUserHandler}>
+      <Button
+        disabled={loading || updateUserLoading}
+        variant="contained"
+        color="secondary"
+        onClick={updateUserHandler}
+      >
         Update User
       </Button>
       <div>
         <ViewHeader title="Account Settings" />
         <Card variant="outlined">
           <Button
+            disabled={loading || deleteUserLoading}
             color="secondary"
-            onClick={deleteUserHandler}
+            onClick={() => {
+              showAlert(true);
+            }}
           >
             Delete User
           </Button>
-          <Button
-            color="secondary"
-            onClick={changePasswordHandler}
-          >
+          <Button color="secondary" onClick={changePasswordHandler}>
             Change Password
           </Button>
         </Card>
