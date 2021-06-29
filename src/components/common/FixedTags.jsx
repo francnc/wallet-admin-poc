@@ -3,7 +3,13 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 
-export const FixedTags = ({ options = [], onChange, values = [] }) => {
+export const FixedTags = ({
+  options = [],
+  onChange,
+  values = [],
+  label = '',
+  placeholder = '',
+}) => {
   return (
     <Autocomplete
       multiple
@@ -25,9 +31,9 @@ export const FixedTags = ({ options = [], onChange, values = [] }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Fixed tag"
+          label={label || 'Label'}
           variant="outlined"
-          placeholder="Favorites"
+          placeholder={placeholder || 'tags'}
           margin="normal"
           fullWidth
         />

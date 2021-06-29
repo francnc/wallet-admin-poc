@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Businesses } from '../components/pages/Businesses';
-import { BusinessView } from '../components/pages/BusinessView';
+import { BusinessView } from '../components/pages/BusinessView/index';
 import { UserView } from '../components/pages/UserView';
 import { UserEdit } from '../components/pages/UserEdit';
 import { Users } from '../components/pages/Users';

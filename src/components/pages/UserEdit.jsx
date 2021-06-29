@@ -67,7 +67,17 @@ export const UserEdit = ({ match }) => {
     margin: 'normal',
   };
 
-  const onSubmitHandler = (event) => {
+  const updateUserHandler = (event) => {
+    event.preventDefault();
+    console.log('submit', state);
+  };
+
+  const changePasswordHandler = (event) => {
+    event.preventDefault();
+    console.log('submit', state);
+  };
+
+  const deleteUserHandler = (event) => {
     event.preventDefault();
     console.log('submit', state);
   };
@@ -106,6 +116,8 @@ export const UserEdit = ({ match }) => {
             {...inputProps}
           />
           <FixedTags
+            label="Roles"
+            placeholder="Add roles"
             options={Object.keys(staticRoles).map((key) => ({
               title: staticRoles[key],
               name: key,
@@ -123,12 +135,25 @@ export const UserEdit = ({ match }) => {
           />
         </form>
       )}
-      <Button variant="contained" color="secondary" onClick={onSubmitHandler}>
+      <Button variant="contained" color="secondary" onClick={updateUserHandler}>
         Update User
       </Button>
       <div>
         <ViewHeader title="Account Settings" />
-        <Card>Delete User</Card>
+        <Card variant="outlined">
+          <Button
+            color="secondary"
+            onClick={deleteUserHandler}
+          >
+            Delete User
+          </Button>
+          <Button
+            color="secondary"
+            onClick={changePasswordHandler}
+          >
+            Change Password
+          </Button>
+        </Card>
       </div>
     </Container>
   );
