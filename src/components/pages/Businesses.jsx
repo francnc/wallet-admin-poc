@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
+import SearchIcon from '@material-ui/icons/Search';
 import { DataGrid } from '@material-ui/data-grid';
 import { GET_ALL_BUSINESSES } from '../../gql/queries/getAllBusinesses';
 import { Loading } from '../common/Loading';
@@ -13,7 +14,11 @@ const Businesses = () => {
     uncomment with precaution when you need
   */
   // const [isFetching, setFetching] = useState(true);
-  const { loading, error, data, fetchMore } = useQuery(GET_ALL_BUSINESSES);
+  const [searchParams, setSearchParams] = useState('');
+  const { loading, error, data, fetchMore, refetch } = useQuery(
+    GET_ALL_BUSINESSES,
+    { variables: { search: searchParams }, notifyOnNetworkStatusChange: true },
+  );
   // useEffect(() => {
   //   if (data) {
   //     const hasNextPage = data.businesses.pageInfo.hasNextPage;
@@ -29,6 +34,10 @@ const Businesses = () => {
   //     }
   //   }
   // }, [data]);
+
+  useEffect(() => {
+    refetch();
+  }, [searchParams]);
 
   if (error) {
     return 'Error';
@@ -89,7 +98,7 @@ const Businesses = () => {
     },
     {
       field: 'Wallet',
-      headerName: 'Chek in wallet',
+      headerName: 'Check in Wallet',
       width: 100,
       sortable: false,
       flex: 1,
@@ -101,22 +110,31 @@ const Businesses = () => {
             redirectToWallet(params.id, 'quick_links');
           }}
         >
-          See in wallet
+          See in Wallet
         </button>
       ),
     },
   ];
 
   const rows = data?.businesses?.edges?.map((business) => business.node);
-
   return (
     <Container maxWidth={false}>
       <h1>Businesses</h1>
+      <div style={{ display: 'flex' }}>
+        <input id="searchInput" />
+        <button
+          onClick={() =>
+            setSearchParams(document.getElementById('searchInput').value)
+          }
+        >
+          <SearchIcon />
+        </button>
+      </div>
       {loading ? (
         <Loading />
       ) : (
         <div style={{ width: '100%', height: '80%' }}>
-          <DataGrid rows={rows} columns={columns} pageSize={20} />
+          <DataGrid disableColumnFilter rows={rows} columns={columns} pageSize={20} />
         </div>
       )}
     </Container>

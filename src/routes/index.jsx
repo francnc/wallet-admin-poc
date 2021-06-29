@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Businesses } from '../components/pages/Businesses';
-import { BusinessView } from '../components/pages/BusinessView';
+import { BusinessView } from '../components/pages/BusinessView/index';
 import { Certificates } from '../components/pages/Certificates';
 import { Policies } from '../components/pages/Policies';
 import { Quotes } from '../components/pages/Quotes';
