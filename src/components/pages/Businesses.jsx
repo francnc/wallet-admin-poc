@@ -38,7 +38,6 @@ const Businesses = () => {
     {
       field: 'name',
       headerName: 'Business Name',
-      width: 200,
       sortable: false,
       flex: 1.5,
       disableClickEventBubbling: true,

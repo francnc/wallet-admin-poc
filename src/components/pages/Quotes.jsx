@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import { DataGrid } from '@material-ui/data-grid';
-import { GET_ALL_CERTIFICATES } from '../../gql/queries/getAllCertificates';
+import { GET_ALL_QUOTES } from '../../gql/queries/getAllQuotes';
 import { Loading } from '../common/Loading';
 
-const Certificates = () => {
+const Quotes = () => {
   /*
     commented code is to avoid querying all businesses in Leanid's local
     uncomment with precaution when you need
   */
   // const [isFetching, setFetching] = useState(true);
-  const { loading, error, data, fetchMore } = useQuery(GET_ALL_CERTIFICATES);
+  const { loading, error, data, fetchMore } = useQuery(GET_ALL_QUOTES);
   // useEffect(() => {
   //   if (data) {
   //     const hasNextPage = data.businesses.pageInfo.hasNextPage;
@@ -35,83 +35,94 @@ const Certificates = () => {
 
   const columns = [
     {
+      field: 'uuid',
+      headerName: 'UUID',
+      flex: 2,
+      sortable: false,
+    },
+    {
+      field: 'insuranceType',
+      headerName: 'Insurance',
+      sortable: false,
+      flex: 1.5,
+      disableClickEventBubbling: true,
+      renderCell: (params) => (
+        <Link to={`/quotes/${params.id}`}>{params.value}</Link>
+      ),
+    },
+    {
       field: 'status',
       headerName: 'Status',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'premium',
+      headerName: 'Premium ($)',
       flex: 0.5,
       sortable: false,
     },
     {
       field: 'name',
-      headerName: 'Business Name',
+      headerName: 'Company Name',
+      flex: 1.5,
       sortable: false,
-      flex: 1,
-      disableClickEventBubbling: true,
-      renderCell: (params) => (
-        <Link to={`/certificates/${params.id}`}>{params.value}</Link>
-      ),
     },
     {
-      field: 'Holder Name',
-      headerName: 'holderName',
+      field: 'contactEmail',
+      headerName: 'Contact Email',
+      flex: 1.5,
+      sortable: false,
+    },
+    {
+      field: 'contactPhone',
+      headerName: 'Сontact Phone',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'mainLocation',
+      headerName: 'Location',
       flex: 0.5,
       sortable: false,
     },
     {
-      field: 'insuranceType',
-      headerName: 'Insurance Types',
-      flex: 1,
+      field: 'termsFilepickerUrl',
+      headerName: 'Terms',
+      flex: 0.5,
       sortable: false,
+      renderCell: (params) => <a href={params.value}>quote.pdf</a>,
     },
     {
-      field: 'holderTypesAttributes',
-      headerName: 'Holder Type',
-      flex: 1.5,
+      field: 'insuranceName',
+      headerName: 'Policy',
+      flex: 1,
       sortable: false,
     },
     {
       field: 'createdAt',
       headerName: 'Created At',
-      flex: 1,
+      flex: 0.5,
       sortable: false,
     },
     {
       field: 'updatedAt',
       headerName: 'Updated At',
-      flex: 1,
-      sortable: false,
-    },
-    {
-      field: 'uuid',
-      headerName: 'Action',
-      sortable: false,
       flex: 0.5,
-      disableClickEventBubbling: true,
-      renderCell: (params) => (
-        <a
-          href={`https://wallet-admin.aoncover.biz/businesses/${params.value}/certificates/${params.id}/edit`}
-        >
-          Edit
-        </a>
-      ),
+      sortable: false,
     },
   ];
 
-  const rows = data?.certificates?.edges?.map((cert) => {
-    const holderTypesAttributes = cert.node.holderTypesAttributes
-      ?.map((attr) => attr.value)
-      .join(', ');
-    return {
-      ...cert.node,
-      holderTypesAttributes: holderTypesAttributes,
-      name: cert.node.businessAttributes.name,
-      createdAt: new Date(cert.node.createdAt),
-      updatedAt: new Date(cert.node.updatedAt),
-    };
-  });
+  const rows = data?.quotes?.edges?.map((quote) => ({
+    ...quote.node,
+    name: quote.node.business.name,
+    policyId: quote.node?.policy?.id,
+    insuranceName: quote.node?.policy?.insuranceName,
+  }));
 
   return (
     <Container maxWidth={false}>
-      <h1>Certificates</h1>
+      <h1>Quotes</h1>
       {loading ? (
         <Loading />
       ) : (
@@ -123,4 +134,4 @@ const Certificates = () => {
   );
 };
 
-export { Certificates };
+export { Quotes };

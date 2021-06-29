@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import { DataGrid } from '@material-ui/data-grid';
-import { GET_ALL_CERTIFICATES } from '../../gql/queries/getAllCertificates';
+import { GET_ALL_POLICIES } from '../../gql/queries/getAllPolicies';
 import { Loading } from '../common/Loading';
 
-const Certificates = () => {
+const Policies = () => {
   /*
     commented code is to avoid querying all businesses in Leanid's local
     uncomment with precaution when you need
   */
   // const [isFetching, setFetching] = useState(true);
-  const { loading, error, data, fetchMore } = useQuery(GET_ALL_CERTIFICATES);
+  const { loading, error, data, fetchMore } = useQuery(GET_ALL_POLICIES);
   // useEffect(() => {
   //   if (data) {
   //     const hasNextPage = data.businesses.pageInfo.hasNextPage;
@@ -44,28 +44,62 @@ const Certificates = () => {
       field: 'name',
       headerName: 'Business Name',
       sortable: false,
-      flex: 1,
+      flex: 1.5,
       disableClickEventBubbling: true,
       renderCell: (params) => (
-        <Link to={`/certificates/${params.id}`}>{params.value}</Link>
+        <Link to={`/businesses/${params.row.business.id}`}>{params.value}</Link>
       ),
     },
     {
-      field: 'Holder Name',
-      headerName: 'holderName',
-      flex: 0.5,
+      field: 'insuranceName',
+      headerName: 'Insurance Type',
+      flex: 1,
       sortable: false,
+      renderCell: (params) => (
+        <Link to={`/policies/${params.id}`}>{params.value}</Link>
+      ),
     },
     {
-      field: 'insuranceType',
-      headerName: 'Insurance Types',
+      field: 'carrierName',
+      headerName: 'Carrier',
       flex: 1,
       sortable: false,
     },
     {
-      field: 'holderTypesAttributes',
-      headerName: 'Holder Type',
-      flex: 1.5,
+      field: 'brokerInfo',
+      headerName: 'Broker',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'premium',
+      headerName: 'Premium ($)',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'effectiveDate',
+      headerName: 'Effective Date',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'expirationDate',
+      headerName: 'Expiration Date',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'filepickerUrl',
+      headerName: 'Policy Document',
+      flex: 1,
+      sortable: false,
+      renderCell: (params) => <a href={params.value}>policy.pdf</a>,
+    },
+    {
+      field: 'policyNumber',
+      headerName: 'Policy Number',
+      flex: 1,
       sortable: false,
     },
     {
@@ -82,36 +116,22 @@ const Certificates = () => {
     },
     {
       field: 'uuid',
-      headerName: 'Action',
+      headerName: 'UUID',
+      flex: 1,
       sortable: false,
-      flex: 0.5,
-      disableClickEventBubbling: true,
-      renderCell: (params) => (
-        <a
-          href={`https://wallet-admin.aoncover.biz/businesses/${params.value}/certificates/${params.id}/edit`}
-        >
-          Edit
-        </a>
-      ),
     },
   ];
 
-  const rows = data?.certificates?.edges?.map((cert) => {
-    const holderTypesAttributes = cert.node.holderTypesAttributes
-      ?.map((attr) => attr.value)
-      .join(', ');
-    return {
-      ...cert.node,
-      holderTypesAttributes: holderTypesAttributes,
-      name: cert.node.businessAttributes.name,
-      createdAt: new Date(cert.node.createdAt),
-      updatedAt: new Date(cert.node.updatedAt),
-    };
-  });
+  const rows = data?.policies?.edges?.map((policy) => ({
+    ...policy.node,
+    name: policy.node.business.name,
+    carrierName: policy.node?.carrier?.name,
+    brokerInfo: `${policy.node?.broker?.name} ${policy.node?.broker?.email}`,
+  }));
 
   return (
     <Container maxWidth={false}>
-      <h1>Certificates</h1>
+      <h1>Policies</h1>
       {loading ? (
         <Loading />
       ) : (
@@ -123,4 +143,4 @@ const Certificates = () => {
   );
 };
 
-export { Certificates };
+export { Policies };
