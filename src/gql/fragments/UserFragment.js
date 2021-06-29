@@ -10,5 +10,13 @@ export const USER_FRAGMENT = gql`
     phone
     userRole
     uuid
+    roles {
+      id
+      name
+    }
+    businesses {
+      id
+      name
+    }
   }
 `;
