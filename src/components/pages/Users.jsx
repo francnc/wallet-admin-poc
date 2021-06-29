@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_USERS } from '../../gql/queries/getAllUsers';
 import { Link } from 'react-router-dom';
@@ -104,11 +104,15 @@ export const Users = ({ history }) => {
       headerName: 'Impersonation',
       flex: 1,
       sortable: false,
-      renderCell: () => <Button variant="contained" color="primary">Impersonate</Button>,
+      renderCell: () => (
+        <Button variant="contained" color="primary">
+          Impersonate
+        </Button>
+      ),
     },
   ];
-  //
-  // const loading = false;
+
+  const [isFetching, setFetching] = useState(true);
 
   const {
     loading,
@@ -120,6 +124,22 @@ export const Users = ({ history }) => {
     },
     fetchMore,
   } = useQuery(GET_ALL_USERS);
+
+  useEffect(() => {
+    if (data.users.edges.length > 0) {
+      const hasNextPage = data.users.pageInfo.hasNextPage;
+      const endCursor = data.users.pageInfo.endCursor;
+      if (hasNextPage) {
+        fetchMore({
+          variables: {
+            after: endCursor,
+          },
+        });
+      } else {
+        setFetching(false);
+      }
+    }
+  }, [data.users.edges]);
 
   return (
     <Container maxWidth={false}>
