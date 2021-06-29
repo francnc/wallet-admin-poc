@@ -13,7 +13,8 @@ const Businesses = () => {
     uncomment with precaution when you need
   */
   // const [isFetching, setFetching] = useState(true);
-  const { loading, error, data, fetchMore } = useQuery(GET_ALL_BUSINESSES);
+  const [searchParams, setSearchParams] = useState('');
+  const { loading, error, data, fetchMore, refetch } = useQuery(GET_ALL_BUSINESSES,{variables: {search: searchParams}});
   // useEffect(() => {
   //   if (data) {
   //     const hasNextPage = data.businesses.pageInfo.hasNextPage;
@@ -109,10 +110,14 @@ const Businesses = () => {
   ];
 
   const rows = data?.businesses?.edges?.map((business) => business.node);
-
   return (
     <Container maxWidth={false}>
       <h1>Businesses</h1>
+      <input id="searchInput"/>
+      <button onClick={()=>{
+        setSearchParams(document.getElementById("searchInput").value)
+        refetch();
+      }}/>
       {loading ? (
         <Loading />
       ) : (
