@@ -41,7 +41,7 @@ export const PolicyColumns = [
     flex: 1.5,
   },
   {
-    field: 'insurance' || 'insuranceName' || 'insuranceTypeName',
+    field: 'insuranceTypeName',
     headerName: 'Insurance type',
     sortable: false,
     flex: 1.5,
@@ -86,7 +86,7 @@ export const QuoteColumns = [
     flex: 1.5,
   },
   {
-    field: 'insurance' || 'insuranceName' || 'insuranceTypeName',
+    field: 'insuranceTypeName',
     headerName: 'Insurance type',
     sortable: false,
     flex: 1.5,
