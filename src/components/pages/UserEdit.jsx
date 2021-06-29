@@ -5,7 +5,7 @@ import { Loading } from '../common/Loading';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
 import { ViewHeader } from '../common/ViewHeader';
-import { Card } from '@material-ui/core';
+import { Button, Card } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { FixedTags } from '../common/FixedTags';
 
@@ -67,6 +67,11 @@ export const UserEdit = ({ match }) => {
     margin: 'normal',
   };
 
+  const onSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log('submit', state);
+  };
+
   return (
     <Container maxWidth={false}>
       <ViewHeader title="Edit User" subTitle={state.firstName}>
@@ -118,6 +123,9 @@ export const UserEdit = ({ match }) => {
           />
         </form>
       )}
+      <Button variant="contained" color="secondary" onClick={onSubmitHandler}>
+        Update User
+      </Button>
       <div>
         <ViewHeader title="Account Settings" />
         <Card>Delete User</Card>
