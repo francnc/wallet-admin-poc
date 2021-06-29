@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_ALL_BUSINESSES = gql`
-  query getAllBusinesses($after: String) {
+  query GetAllBusinesses($after: String) {
     businesses(after: $after) {
       edges {
         node {

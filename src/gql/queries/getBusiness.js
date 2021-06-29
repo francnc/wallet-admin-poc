@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client';
-import { USERS_IN_BUSINESS } from '../fragments/users';
-import { POLICIES_IN_BUSINESS } from '../fragments/policies';
-import { QUOTES_IN_BUSINESS } from '../fragments/quotes';
+import { POLICY_FRAGMENT } from '../fragments/PolicyFragment';
+import { QUOTE_FRAGMENT } from '../fragments/QuoteFragment';
+import { USER_FRAGMENT } from '../fragments/UserFragment';
 
 export const GET_BUSINESS = gql`
-  query getBusiness($ids: [Int!]) {
+  query GetBusiness($ids: [Int!]) {
     businesses(ids: $ids) {
       nodes {
         name
@@ -12,16 +12,22 @@ export const GET_BUSINESS = gql`
       }
     }
     users(businessIds: $ids) {
-      ...UsersInBusinessFragment
+      nodes {
+        ...UserFragment
+      }
     }
     policies(businessIds: $ids) {
-      ...PoliciesInBusinessFragment
+      nodes {
+        ...PolicyFragment
+      }
     }
     quotes(businessIds: $ids) {
-      ...QuotesInBusinessFragment
+      nodes {
+        ...QuoteFragment
+      }
     }
   }
-  ${USERS_IN_BUSINESS}
-  ${POLICIES_IN_BUSINESS}
-  ${QUOTES_IN_BUSINESS}
+  ${POLICY_FRAGMENT}
+  ${QUOTE_FRAGMENT}
+  ${USER_FRAGMENT}
 `;

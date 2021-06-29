@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const GET_CERTIFICATES_QUERY = gql`
-  query GetCertificatesQuery($currentBusinessId: Int!) {
+export const GET_ALL_CERTIFICATES = gql`
+  query GetAllCertificates($currentBusinessId: Int!) {
     certificates(ids: [$currentBusinessId]) {
       nodes {
         id
