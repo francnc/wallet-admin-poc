@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
+import { Link } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import { DataGrid } from '@material-ui/data-grid';
 import { GET_ALL_BUSINESSES } from '../../gql/queries/getAllBusinesses';
 import { Loading } from '../common/Loading';
-import Container from '@material-ui/core/Container';
-
 import { redirectToWallet } from '../../util/walletRedirection';
 
 const Businesses = () => {
@@ -33,24 +34,91 @@ const Businesses = () => {
     return 'Error';
   }
 
+  const columns = [
+    {
+      field: 'name',
+      headerName: 'Business Name',
+      width: 200,
+      sortable: false,
+      flex: 1.5,
+      disableClickEventBubbling: true,
+      renderCell: (params) => (
+        <Link to={`/businesses/${params.id}`}>{params.value}</Link>
+      ),
+    },
+    {
+      field: 'industry',
+      headerName: 'Industry',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'subindustry',
+      headerName: 'Sub-Industry',
+      flex: 1,
+      sortable: false,
+    },
+    {
+      field: 'contactEmail',
+      headerName: 'Contact Email',
+      flex: 1.5,
+      sortable: false,
+    },
+    {
+      field: 'contactPhone',
+      headerName: 'Сontact Phone',
+      flex: 0.5,
+      sortable: false,
+    },
+    {
+      field: 'createdAt',
+      headerName: 'Created At',
+      flex: 0.5,
+      sortable: false,
+    },
+    {
+      field: 'updatedAt',
+      headerName: 'Updated At',
+      flex: 0.5,
+      sortable: false,
+    },
+    {
+      field: 'uuid',
+      headerName: 'UUID',
+      flex: 1.5,
+      sortable: false,
+    },
+    {
+      field: 'Wallet',
+      headerName: 'Chek in wallet',
+      width: 100,
+      sortable: false,
+      flex: 1,
+      disableClickEventBubbling: true,
+      renderCell: (params) => (
+        <button
+          onClick={() => {
+            console.log(params);
+            redirectToWallet(params.id, 'quick_links');
+          }}
+        >
+          See in wallet
+        </button>
+      ),
+    },
+  ];
+
+  const rows = data?.businesses?.edges?.map((business) => business.node);
+
   return (
-    <Container>
+    <Container maxWidth={false}>
       <h1>Businesses</h1>
       {loading ? (
         <Loading />
       ) : (
-        data?.businesses?.edges?.map((i) => (
-          <>
-            <p>
-              business uuid: {i.node.uuid}
-              <br />
-              business name: {i.node.name}
-            </p>
-            <button onClick={() => redirectToWallet(i.node.id, 'quick_links')}>
-              See business in wallet
-            </button>
-          </>
-        ))
+        <div style={{ width: '100%', height: '80%' }}>
+          <DataGrid rows={rows} columns={columns} pageSize={20} />
+        </div>
       )}
     </Container>
   );
