@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { redirectToWallet } from '../../../util/walletRedirection';
 
 export const UserColumns = [
@@ -30,6 +31,21 @@ export const UserColumns = [
     headerName: 'uuid',
     sortable: false,
     flex: 1.5,
+  },
+  {
+    field: 'action',
+    headerName: 'Action',
+    flex: 1,
+    sortable: false,
+    renderCell: (user) => (
+      <div
+        style={{
+          lineHeight: 1.5,
+        }}
+      >
+        <Link to={`/users/${user.id}/edit`}>Edit</Link>
+      </div>
+    ),
   },
 ];
 
