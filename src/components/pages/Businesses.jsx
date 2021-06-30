@@ -106,7 +106,6 @@ const Businesses = () => {
       renderCell: (params) => (
         <button
           onClick={() => {
-            console.log(params);
             redirectToWallet(params.id, 'quick_links');
           }}
         >

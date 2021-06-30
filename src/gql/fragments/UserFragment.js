@@ -18,6 +18,7 @@ export const USER_FRAGMENT = gql`
     }
     businesses {
       id
+      uuid
       name
     }
   }

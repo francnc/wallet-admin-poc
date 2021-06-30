@@ -81,7 +81,7 @@ const Certificates = () => {
       sortable: false,
     },
     {
-      field: 'uuid',
+      field: 'businessUuid',
       headerName: 'Action',
       sortable: false,
       flex: 0.5,
@@ -102,6 +102,7 @@ const Certificates = () => {
       .join(', ');
     return {
       ...cert.node,
+      businessUuid: cert.node.businessAttributes.uuid,
       holderTypesAttributes: holderTypesAttributes,
       name: cert.node.businessAttributes.name,
       createdAt: new Date(cert.node.createdAt),
