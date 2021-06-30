@@ -19,7 +19,6 @@ export const MainLayout = ({ children }) => {
       </AppBar>
       <div
         style={{
-          marginTop: 50,
           minHeight: '100%',
           display: 'flex',
         }}

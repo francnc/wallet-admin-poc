@@ -7,6 +7,7 @@ export const GET_BUSINESS = gql`
   query GetBusiness($ids: [Int!]) {
     businesses(ids: $ids) {
       nodes {
+        id
         name
         uuid
       }

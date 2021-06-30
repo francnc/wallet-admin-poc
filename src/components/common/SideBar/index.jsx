@@ -14,7 +14,7 @@ export const SideBar = () => {
       const item = links.find((it) => it.link === location.pathname);
       setCurrentItem(item || {});
     }
-  }, []);
+  }, [location.pathname]);
 
   const handleClose = (item) => {
     setCurrentItem(item);

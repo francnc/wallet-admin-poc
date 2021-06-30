@@ -4,7 +4,8 @@ html, body, #root {
 }
 
 main {
-  height: 100%;
+  padding-top: 50px;
+  height: calc(100% - 50px);
 }
 
 body {
@@ -44,4 +45,18 @@ code {
   position: fixed;
   width: 200px;
   color: white
+}
+
+.view-header {
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .view-header-title {
+    h1 {
+      font-weight: 300;
+      line-height: 0;
+      color: #333
+    }
+  }
 }
