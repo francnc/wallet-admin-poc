@@ -70,27 +70,10 @@ const columns = [
           lineHeight: 1.5,
         }}
       >
-        <Link to={`/users/${user.id}`}>
-          <AccountBox />
-        </Link>
-        <Link to={`/users/${user.id}/edit`}>
-          <EditIcon />
-        </Link>
-        <Link to={`/request_docs/new?user_id=${user.id}`}>
-          <InsertDriveFile />
-        </Link>
+        <Link to={`/users/${user.id}`}>View</Link>
+        {' | '}
+        <Link to={`/users/${user.id}/edit`}>Edit</Link>
       </div>
-    ),
-  },
-  {
-    field: 'impersonate',
-    headerName: 'Impersonation',
-    flex: 1,
-    sortable: false,
-    renderCell: () => (
-      <Button variant="contained" color="primary">
-        Impersonate
-      </Button>
     ),
   },
 ];
