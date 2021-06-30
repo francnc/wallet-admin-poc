@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import { DataGrid } from '@material-ui/data-grid';
 import { GET_ALL_POLICIES } from '../../gql/queries/getAllPolicies';
 import { Loading } from '../common/Loading';
+import { redirectToWallet } from '../../util/walletRedirection';
 
 const Policies = () => {
   /*
@@ -119,6 +120,24 @@ const Policies = () => {
       headerName: 'UUID',
       flex: 1,
       sortable: false,
+    },
+    {
+      field: 'Wallet',
+      headerName: 'Check in Wallet',
+      width: 100,
+      sortable: false,
+      flex: 1,
+      disableClickEventBubbling: true,
+      renderCell: (params) => (
+        <button
+          onClick={() => {
+            console.log(params);
+            redirectToWallet(params.id, `policies/${params.row.uuid}/endorsements/request`);
+          }}
+        >
+          Modify Policy
+        </button>
+      ),
     },
   ];
 
