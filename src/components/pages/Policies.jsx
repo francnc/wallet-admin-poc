@@ -131,7 +131,6 @@ const Policies = () => {
       renderCell: (params) => (
         <button
           onClick={() => {
-            console.log(params);
             redirectToWallet(params.id, `policies/${params.row.uuid}/endorsements/request`);
           }}
         >
