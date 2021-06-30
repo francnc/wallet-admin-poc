@@ -46,9 +46,6 @@ const Quotes = () => {
       sortable: false,
       flex: 1.5,
       disableClickEventBubbling: true,
-      renderCell: (params) => (
-        <Link to={`/quotes/${params.id}`}>{params.value}</Link>
-      ),
     },
     {
       field: 'status',

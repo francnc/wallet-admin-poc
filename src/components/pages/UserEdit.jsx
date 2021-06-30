@@ -91,7 +91,6 @@ export const UserEdit = ({ match, history }) => {
 
   const changePasswordHandler = (event) => {
     event.preventDefault();
-    console.log('submit', state);
   };
 
   const deleteUserHandler = (event) => {
@@ -109,6 +108,11 @@ export const UserEdit = ({ match, history }) => {
     }).then(() => {
       history.push('/users');
     });
+  };
+
+  const onChangeField = (event) => {
+    const { name, value } = event.target;
+    setState({ ...state, [name]: value });
   };
 
   return (
@@ -146,24 +150,28 @@ export const UserEdit = ({ match, history }) => {
       ) : (
         <form>
           <TextField
+            onChange={onChangeField}
             label="First Name (Optional)"
             name="firstName"
             value={state.firstName}
             {...inputProps}
           />
           <TextField
+            onChange={onChangeField}
             label="Last Name (Optional)"
             name="lastName"
             value={state.lastName}
             {...inputProps}
           />
           <TextField
-            label="Email (Optional)"
+            onChange={onChangeField}
+            label="Email (Required)"
             name="email"
             value={state.email}
             {...inputProps}
           />
           <TextField
+            onChange={onChangeField}
             label="Phone (Optional)"
             name="phone"
             value={state.phone}
