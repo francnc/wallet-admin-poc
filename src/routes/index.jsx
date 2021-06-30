@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { HomePage } from '../components/pages/HomePage';
 import { Businesses } from '../components/pages/Businesses';
 import { BusinessView } from '../components/pages/BusinessView/index';
 import { UserView } from '../components/pages/UserView';
@@ -18,6 +19,7 @@ const Routes = () => {
         <Route component={Users} path="/users" exact />
         <Route component={UserView} path="/users/:userId" exact />
         <Route component={UserEdit} path="/users/:userId/edit" />
+        <Route component={HomePage} path="/" exact />
         <Route component={Businesses} path="/businesses" exact />
         <Route component={Policies} path="/policies" exact />
         <Route component={Quotes} path="/quotes" exact />
