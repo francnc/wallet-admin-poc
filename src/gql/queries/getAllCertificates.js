@@ -12,6 +12,8 @@ export const GET_ALL_CERTIFICATES = gql`
           createdAt
           holderName
           businessAttributes {
+            id
+            uuid
             name
           }
           insuranceType
