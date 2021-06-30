@@ -86,6 +86,14 @@ export const UserEdit = ({ match, history }) => {
         },
         userId,
       },
+      refetchQueries: [
+        {
+          query: GET_USER,
+          variables: {
+            ids: parseInt(userId, 0),
+          },
+        },
+      ],
     });
   };
 
@@ -144,6 +152,18 @@ export const UserEdit = ({ match, history }) => {
       )}
       <ViewHeader title="Edit User" subTitle={state.firstName}>
         <Link to="/users">« Back to Users</Link>
+        <Button
+          style={{
+            marginLeft: 10,
+          }}
+          onClick={() => {
+            history.push(`/users/${userId}`);
+          }}
+          variant="contained"
+          color="default"
+        >
+          View User
+        </Button>
       </ViewHeader>
       {loading ? (
         <Loading />
