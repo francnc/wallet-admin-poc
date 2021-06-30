@@ -91,8 +91,6 @@ export const UserEdit = ({ match, history }) => {
 
   const changePasswordHandler = (event) => {
     event.preventDefault();
-
-    console.log('submit', state);
   };
 
   const deleteUserHandler = (event) => {
