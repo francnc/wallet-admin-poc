@@ -17,7 +17,7 @@ const Routes = () => {
     <MainLayout>
       <Switch>
         <Route component={Users} path="/users" exact />
-        <Route component={UserView} path="/users/:userId" exact />
+        <Route component={UserView} path="/users/:userId" />
         <Route component={UserEdit} path="/users/:userId/edit" />
         <Route component={HomePage} path="/" exact />
         <Route component={Businesses} path="/businesses" exact />
