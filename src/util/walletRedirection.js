@@ -8,5 +8,7 @@ export const redirectToWallet = (businessId, path) => {
     domain: 'aoncover.test',
   });
   console.log(cookies.get('current_business'));
-  location.href = `http://wallet.aoncover.test:3022/${path}`;
+  if (cookies.get('current_business')) {
+    location.href = `http://wallet.aoncover.test/${path}`;
+  }
 };
