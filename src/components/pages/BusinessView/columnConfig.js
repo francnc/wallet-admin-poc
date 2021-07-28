@@ -68,8 +68,10 @@ export const PolicyColumns = [
     renderCell: (params) => (
       <button
         onClick={() => {
-          console.log(params);
-          redirectToWallet(params.id, `policies/${params.row.uuid}/endorsements/request`);
+          redirectToWallet(
+            params.row.business.id,
+            `policies/${params.row.uuid}/endorsements/request`,
+          );
         }}
       >
         Modify Policy

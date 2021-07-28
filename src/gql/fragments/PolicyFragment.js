@@ -4,6 +4,7 @@ export const POLICY_FRAGMENT = gql`
   fragment PolicyFragment on Policy {
     id
     business {
+      id
       name
     }
     carrier {
